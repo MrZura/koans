@@ -15,6 +15,9 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
+  raise TriangleError, "У треугольника не может быть отрицательных или нулевых сторон" if [a,b,c].min <= 0
+  x, y, z = [a,b,c].sort
+  raise TriangleError, "Сумма двух наименьших сторон должна быть больше третьей стороны" if x + y <= z
   case [a,b,c].uniq.size
 	when 1 then :equilateral
 	when 2 then :isosceles
