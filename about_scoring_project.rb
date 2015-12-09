@@ -31,6 +31,35 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  result = 0
+  
+  count = Hash.new(0)
+  # Считаем количество выпаданий каждого номера
+  dice.each do |roll|
+    count[roll] += 1
+  end
+
+  count.each do |number, total|
+    # Проверяем, есть-ли 3 единицы
+    if number == 1 && total >= 3
+      result += 1000
+      total -= 3 # Откидываем 3 единицы, чтобы посчитать остальные
+    end
+    # Проверяем на тройки остальные цифры
+    if total >= 3
+      result += number*100
+      total -= 3
+    end
+    # Считаем оставшиеся единицы
+    if number == 1 && total <= 2
+      result += total*100
+    end
+    # Считаем оставшиеся пятерки
+    if number == 5 && total <= 2
+      result += total*50
+    end
+  end
+  result
 end
 
 class AboutScoringProject < Neo::Koan
